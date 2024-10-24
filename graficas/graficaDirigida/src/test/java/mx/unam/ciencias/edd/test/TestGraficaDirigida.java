@@ -717,6 +717,30 @@ public class TestGraficaDirigida {
         // Comprobar conexiones que no deben existir
         Assert.assertFalse("La gráfica combinada no debe contener la conexión 1 → 3", graficaCombinada.sonVecinos(1, 3));
         Assert.assertFalse("La gráfica combinada no debe contener la conexión 5 → 4", graficaCombinada.sonVecinos(5, 4));
+    
+        //Comprobamos una cosa de dijktrsa:
+        List<VerticeGrafica<Integer>> lista1 = new ArrayList<VerticeGrafica<Integer>>();
+        lista1.add(graficaCombinada.vertice(7));
+        lista1.add(graficaCombinada.vertice(1));
+        lista1.add(graficaCombinada.vertice(2));
+        lista1.add(graficaCombinada.vertice(5));
+
+        List<VerticeGrafica<Integer>> dijkstra = graficaCombinada.dijkstra(7, 5);
+
+        Assert.assertTrue(lista1.equals(dijkstra));
+
+        //Comprobamos una cosa de dijktrsa:
+        List<VerticeGrafica<Integer>> lista2 = new ArrayList<VerticeGrafica<Integer>>();
+        lista2.add(graficaCombinada.vertice(5));
+        lista2.add(graficaCombinada.vertice(6));
+        lista2.add(graficaCombinada.vertice(1));
+        lista2.add(graficaCombinada.vertice(2));
+        lista2.add(graficaCombinada.vertice(3));
+        lista2.add(graficaCombinada.vertice(4));
+
+        dijkstra = graficaCombinada.dijkstra(5, 4);
+
+        Assert.assertTrue(lista2.equals(dijkstra));
     }
 
 }
