@@ -972,7 +972,7 @@ public class GraficaDirigida<T> implements Coleccion<T> {
             for (T vecino : verticeActual.vecinos.keySet()) {
                 Vecino verticeVecino = verticeActual.vecinos.get(vecino);
                 if (!graficaCombinada.sonVecinos(elemento, vecino)) {
-                    graficaCombinada.conecta(elemento, vecino, verticeVecino.peso); // Conectar desde el elemento actual al vecino
+                    graficaCombinada.conecta(elemento, vecino, grafica.getPeso(elemento, vecino)); // Conectar desde el elemento actual al vecino
                 }
             }
 
