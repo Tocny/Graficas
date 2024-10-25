@@ -43,9 +43,27 @@ public class TraductorSVG implements TraductorLenguaje {
      * @param colorFigura el color del círculo.
      * @return una cadena SVG que representa el círculo.
      */
-    @Override public String dibujaCirculo(double cx, double cy, int radio, ColorSVG colorBorde, int gruesoBorde, ColorSVG colorFigura) {
+    @Override public String dibujaCirculo(double cx, double cy, int radio, ColorHex colorBorde, int gruesoBorde, ColorHex colorFigura) {
         return String.format("    <circle cx='%f' cy='%f' r='%d' stroke='%s' stroke-width='%d' fill='%s' />\n", 
                               cx, cy, radio, colorBorde.getCodigoColor(), gruesoBorde, colorFigura.getCodigoColor());
+    }
+
+    /**
+     * Método que dibuja un triángulo en el lienzo SVG.
+     * @param x1 la coordenada x del primer vértice.
+     * @param y1 la coordenada y del primer vértice.
+     * @param x2 la coordenada x del segundo vértice.
+     * @param y2 la coordenada y del segundo vértice.
+     * @param x3 la coordenada x del tercer vértice.
+     * @param y3 la coordenada y del tercer vértice.
+     * @param colorBorde el color del borde del triángulo.
+     * @param gruesoBorde el grosor del borde del triángulo.
+     * @param colorFigura el color de relleno del triángulo.
+     * @return una cadena SVG que representa el triángulo.
+     */
+    @Override public String dibujaTriangulo(double x1, double y1, double x2, double y2, double x3, double y3, ColorHex colorBorde, int gruesoBorde, ColorHex colorFigura) {
+        return String.format("    <polygon points='%f,%f %f,%f %f,%f' stroke='%s' stroke-width='%d' fill='%s' />\n",
+                             x1, y1, x2, y2, x3, y3, colorBorde.getCodigoColor(), gruesoBorde, colorFigura.getCodigoColor());
     }
 
     /**
@@ -58,7 +76,7 @@ public class TraductorSVG implements TraductorLenguaje {
      * @param anchoPoste el ancho de la línea.
      * @return una cadena SVG que representa la línea.
      */
-    @Override public String dibujaLinea(double x1, double y1, double x2, double y2, ColorSVG colorPoste, int anchoPoste) {
+    @Override public String dibujaLinea(double x1, double y1, double x2, double y2, ColorHex colorPoste, int anchoPoste) {
         return String.format("    <line x1='%f' y1='%f' x2='%f' y2='%f' stroke='%s' stroke-width='%d' />\n", 
                               x1, y1, x2, y2, colorPoste.getCodigoColor(), anchoPoste);
     }
@@ -72,7 +90,7 @@ public class TraductorSVG implements TraductorLenguaje {
      * @param texto el texto a escribir en el lienzo.
      * @return una cadena SVG que representa el texto.
      */
-    @Override public String dibujaTexto(double x, double y, String texto, int tamFuente, ColorSVG colorTexto) {
+    @Override public String dibujaTexto(double x, double y, String texto, int tamFuente, ColorHex colorTexto) {
         return String.format("    <text fill='%s' font-family='sans-serif' font-size='%d' font-weight='bold' x='%f' y='%f' text-anchor='middle'>%s</text>\n",
                              colorTexto.getCodigoColor(), tamFuente, x, y, texto);
     }
@@ -82,7 +100,7 @@ public class TraductorSVG implements TraductorLenguaje {
      * @param color el color del lienzo.
      * @return una cadena SVG que representa el rectángulo de fondo.
      */
-    @Override public String coloreaLienzo(ColorSVG color) {
+    @Override public String coloreaLienzo(ColorHex color) {
         return String.format("    <rect width='100%%' height='100%%' fill='%s' />\n", color.getCodigoColor());
     }
 }

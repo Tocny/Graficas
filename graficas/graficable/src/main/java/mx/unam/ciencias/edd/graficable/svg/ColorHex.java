@@ -1,7 +1,7 @@
 package mx.unam.ciencias.edd.graficable.svg;
 
-/**Enumeración para los colores en svg. */
-public enum ColorSVG {
+/**Enumeración para los colores en su valor hexadecimal. */
+public enum ColorHex {
     /**Color: rojo. */
     ROJO("#FF0000"),
     /**Color: verde. */
@@ -17,7 +17,13 @@ public enum ColorSVG {
     /**Color: blanco. */
     BLANCO("#FFFFFF"),
     /**Color: gris. */
-    GRIS("#808080");
+    GRIS("#808080"),
+    /** Color: magenta. */
+    MAGENTA("#FF00FF"),
+    /** Color: púrpura. */
+    PURPURA("#800080"),
+    /** Color: cian. */
+    CYAN("#00FFFF");
 
     /**Constante codigoColor para los objetos. */
     private final String codigoColor;
@@ -26,7 +32,7 @@ public enum ColorSVG {
      * Constructor de la enumeracion, asigna el atributo codigoColor.
      * @param codigoColor cadena correspondiente al codigo del color.
      */
-    ColorSVG(String codigoColor) {
+    ColorHex(String codigoColor) {
         this.codigoColor = codigoColor;
     }
 
