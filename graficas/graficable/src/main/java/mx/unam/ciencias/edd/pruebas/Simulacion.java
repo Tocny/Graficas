@@ -9,31 +9,64 @@ public class Simulacion {
 
     public static void main(String[] args) {
         // Crear el grafo dirigido
-        GraficaDirigida<Estacion> grafo = new GraficaDirigida<>();
+        GraficaDirigida<Estacion> grafica1 = new GraficaDirigida<>();
+        grafica1.agrega(new Estacion(50, 50, ColorHex.VERDE, "Estación 1")); // Agregar vértice 1
+        grafica1.agrega(new Estacion(100, 200, ColorHex.VERDE, "Estación 2")); // Agregar vértice 2
+        grafica1.agrega(new Estacion(200, 50, ColorHex.VERDE, "Estación 3")); // Agregar vértice 3
+        grafica1.conecta(new Estacion(50, 50, ColorHex.VERDE, "Estación 1"),
+                         new Estacion(100, 200, ColorHex.VERDE, "Estación 2")); // 1 → 2
+        grafica1.conecta(new Estacion(100, 200, ColorHex.VERDE, "Estación 2"),
+                         new Estacion(200, 50, ColorHex.VERDE, "Estación 3")); // 2 → 3
 
-        // Crear estaciones
-        Estacion estacion1 = new Estacion(50, 50, ColorSVG.ROJO, "Estación 1");
-        Estacion estacion2 = new Estacion(150, 150, ColorSVG.AZUL, "Estación 2");
-        Estacion estacion3 = new Estacion(200, 50, ColorSVG.VERDE, "Estación 3");
-        Estacion estacion4 = new Estacion(300, 200, ColorSVG.NEGRO, "Estación 4");
+        GraficaDirigida<Estacion> grafica2 = new GraficaDirigida<>();
+        grafica2.agrega(new Estacion(200, 50, ColorHex.AMARILLO, "Estación 3")); // Agregar vértice 3
+        grafica2.agrega(new Estacion(300, 50, ColorHex.AMARILLO, "Estación 4")); // Agregar vértice 4
+        grafica2.agrega(new Estacion(250, 150, ColorHex.AMARILLO, "Estación 5")); // Agregar vértice 5
+        grafica2.agrega(new Estacion(100, 100, ColorHex.AMARILLO, "Estación 6")); // Agregar vértice 6
+        grafica2.conecta(new Estacion(200, 50, ColorHex.AMARILLO, "Estación 3"),
+                         new Estacion(100, 100, ColorHex.AMARILLO, "Estación 6")); // 3 → 6
+        grafica2.conecta(new Estacion(200, 50, ColorHex.AMARILLO, "Estación 3"),
+                         new Estacion(300, 50, ColorHex.AMARILLO, "Estación 4")); // 3 → 4
+        grafica2.conecta(new Estacion(300, 50, ColorHex.AMARILLO, "Estación 4"),
+                         new Estacion(250, 150, ColorHex.AMARILLO, "Estación 5")); // 4 → 5
 
-        // Agregar estaciones al grafo
-        grafo.agrega(estacion1);
-        grafo.agrega(estacion2);
-        grafo.agrega(estacion3);
-        grafo.agrega(estacion4);
+        GraficaDirigida<Estacion> grafica3 = new GraficaDirigida<>();
+        grafica3.agrega(new Estacion(250, 150, ColorHex.MAGENTA, "Estación 5")); // Agregar vértice 5
+        grafica3.agrega(new Estacion(50, 50, ColorHex.MAGENTA, "Estación 1"));//Agregamos la estacion 1.
+        grafica3.agrega(new Estacion(100, 100, ColorHex.MAGENTA, "Estación 6")); // Agregar vértice 6
+        grafica3.agrega(new Estacion(350, 200, ColorHex.MAGENTA, "Estación 7")); // Agregar vértice 7
+        grafica3.conecta(new Estacion(250, 150, ColorHex.MAGENTA, "Estación 5"),
+                         new Estacion(100, 100, ColorHex.MAGENTA, "Estación 6")); // 5 → 6
+        grafica3.conecta(new Estacion(100, 100, ColorHex.MAGENTA, "Estación 6"),
+                         new Estacion(350, 200, ColorHex.MAGENTA, "Estación 7")); // 6 → 7
+        grafica3.conecta(new Estacion(100, 100, ColorHex.MAGENTA, "Estación 6"),
+                         new Estacion(50, 50, ColorHex.MAGENTA, "Estación 1"));                 
 
-        // Conectar estaciones (agregar aristas)
-        grafo.conecta(estacion1, estacion2);
-        grafo.conecta(estacion2, estacion3);
-        grafo.conecta(estacion1, estacion3, 1000);
-        grafo.conecta(estacion3, estacion4);
+        GraficaDirigida<Estacion> grafica4 = new GraficaDirigida<>();
+        grafica4.agrega(new Estacion(50, 50, ColorHex.CYAN, "Estación 1")); // Agregar vértice 1
+        grafica4.agrega(new Estacion(100, 200, ColorHex.CYAN, "Estación 2")); // Agregar vértice 2
+        grafica4.agrega(new Estacion(350, 200, ColorHex.CYAN, "Estación 7")); // Agregar vértice 7
+        grafica4.agrega(new Estacion(100, 100, ColorHex.CYAN, "Estación 6")); // Agregar vértice 6
+        grafica4.agrega(new Estacion(250, 150, ColorHex.CYAN, "Estación 5")); // Agregar vértice 5
+        grafica4.conecta(new Estacion(350, 200, ColorHex.CYAN, "Estación 7"),
+                        new Estacion(50, 50, ColorHex.CYAN, "Estación 1"));
+        grafica4.conecta(new Estacion(350, 200, ColorHex.CYAN, "Estación 7"),
+                        new Estacion(100, 100, ColorHex.CYAN, "Estación 6"));
+        grafica4.conecta(new Estacion(100, 200, ColorHex.CYAN, "Estación 2"),
+                        new Estacion(250, 150, ColorHex.CYAN, "Estación 5"));
+
+        // Combinar las gráficas
+        List<GraficaDirigida<Estacion>> graficas = Arrays.asList(grafica1, grafica2, grafica3, grafica4);
+        GraficaDirigida<Estacion> graficaCombinada = new GraficaDirigida<>();
+        graficaCombinada = graficaCombinada.combinarGraficas(graficas);
 
 
         // Graficar en SVG
-        GraficadorGrafo<Estacion> graficador = new GraficadorGrafo<>(grafo, new TraductorSVG());
+        Estacion estacion5 = new Estacion(250, 150, ColorHex.NEGRO, "Estación 5");
+        Estacion estacion4 = new Estacion(300, 50, ColorHex.NEGRO, "Estación 4");
+        GraficadorGrafo<Estacion> graficador = new GraficadorGrafo<>(graficaCombinada, new TraductorSVG());
         graficador.graficaAristas();
-        graficador.graficaCamino(grafo.dijkstraElementos(estacion1, estacion3));
+        graficador.graficaCamino(graficaCombinada.dijkstraElementos(estacion5, estacion4));
         graficador.graficaVertices();
 
         // Mostrar el resultado en SVG

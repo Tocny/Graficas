@@ -1,6 +1,6 @@
 package mx.unam.ciencias.edd.graficable;
 
-import mx.unam.ciencias.edd.graficable.svg.ColorSVG;
+import mx.unam.ciencias.edd.graficable.svg.ColorHex;
 
 /**
  * Interfaz que define el comportamiento de un vértice en un sistema gráfico 
@@ -24,11 +24,11 @@ public interface VerticeCoordenado {
     public double getCoordY();
 
     /**
-     * Obtiene el color del vértice representado como una instancia de {@link ColorSVG}.
+     * Obtiene el color del vértice representado como una instancia de {@link ColorHex}.
      * 
      * @return el color del vértice.
      */
-    public ColorSVG getColorVertice();
+    public ColorHex getColorVertice();
 
     /**
      * Proporciona una descripción textual del vértice, la cual puede incluir 

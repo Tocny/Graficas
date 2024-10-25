@@ -1,21 +1,35 @@
 package mx.unam.ciencias.edd.graficable;
 
 import mx.unam.ciencias.edd.GraficaDirigida;
-import mx.unam.ciencias.edd.graficable.svg.ColorSVG;
+import mx.unam.ciencias.edd.graficable.svg.ColorHex;
 import java.util.*;
 
 public class GraficadorGrafo<V extends VerticeCoordenado> {
 
-    /**La grafica dirigida que vamos a graficar. */
+    /** La grafica dirigida que vamos a graficar. */
     private GraficaDirigida<V> grafo; 
-    /**Ancho del lienzo */
-    private double anchoLienzo = 20;
-    /**Alto del lienzo. */
+    /** Ancho del lienzo. */
+    private double anchoLienzo = 200;
+    /** Alto del lienzo. */
     private double altoLienzo = 20;
-    /**Traductor intercambiable. */
+    /**Maxima coordenada X. */
+    private double maxCoordX = 0;
+    /**Máxima coordenada Y. */
+    private double maxCoordY = 0;
+    /** Traductor intercambiable. */
     private TraductorLenguaje traductor;
-    /**StringBuilder que almacena los datos. */
+    /** StringBuilder que almacena los datos. */
     private StringBuilder sb;
+
+    /** Constantes privadas para dimensiones y estilos */
+    private static final int RADIO_VERTICE = 10; 
+    private static final ColorHex COLOR_BORDE = ColorHex.NEGRO; 
+    private static final int GRUESO_BORDE = 2; 
+    private static final ColorHex COLOR_FIGURA = ColorHex.BLANCO; 
+    private static final int TAM_FUENTE = 12; // Tamaño de la fuente para el texto
+    private static final ColorHex COLOR_TEXTO = ColorHex.NEGRO; // Color del texto
+    private static final int ANCHO_LINEA = 2; 
+    private static final int TAMANIO_APUNTADOR = 5;
 
     /**
      * Constructor de la clase, asigna atributos.
@@ -42,37 +56,29 @@ public class GraficadorGrafo<V extends VerticeCoordenado> {
             double coordX = vertice.getCoordX();
             double coordY = vertice.getCoordY();
 
-            if (coordX > anchoLienzo) {
-                anchoLienzo = coordX;
+            if (coordX > maxCoordX) {
+                maxCoordX = coordX;
             }
-            if (coordY > altoLienzo) {
-                altoLienzo = coordY;
+            if (coordY > maxCoordY) {
+                maxCoordY = coordY;
             }
-
-            anchoLienzo += 50;
-            altoLienzo += 50;
         }
+
+        anchoLienzo += maxCoordX;
+        altoLienzo += maxCoordY;
     }
 
     /**
      * Método que agrega los vértices al sb.
      */
     public void graficaVertices(){
-        int radio = 10; 
-        ColorSVG colorBorde = ColorSVG.NEGRO; 
-        int gruesoBorde = 2; 
-        ColorSVG colorFigura = ColorSVG.BLANCO; 
-        int tamFuente = 12; // Tamaño de la fuente para el texto
-        ColorSVG colorTexto = ColorSVG.NEGRO; // Color del texto
-
         for (V vertice : grafo.obtenerElementos()) {
             double cx = vertice.getCoordX();
             double cy = vertice.getCoordY();
             
             // Dibuja el círculo
-            sb.append(traductor.dibujaCirculo(cx, cy, radio, colorBorde, gruesoBorde, colorFigura));
-            
-            sb.append(traductor.dibujaTexto(cx, cy - 15, vertice.descripcion(), tamFuente, colorTexto)); // Ajustar 'cy' para que el texto esté arriba
+            sb.append(traductor.dibujaCirculo(cx, cy, RADIO_VERTICE, COLOR_BORDE, GRUESO_BORDE, COLOR_FIGURA));
+            sb.append(traductor.dibujaTexto(cx, cy - 15, vertice.descripcion(), TAM_FUENTE, COLOR_TEXTO)); // Ajustar 'cy' para que el texto esté arriba
         }
     }
 
@@ -80,17 +86,16 @@ public class GraficadorGrafo<V extends VerticeCoordenado> {
      * Método para graficar las aristas.
      */
     public void graficaAristas() {
-        ColorSVG colorLinea = ColorSVG.NEGRO; 
-        int anchoLinea = 2; 
 
-        for(V vertice : grafo.obtenerElementos()){
-            for(V vecino: grafo.obtenerElementos()){ // Asegúrate de que obtenerVecinos use el tipo correcto
+        for (V vertice : grafo.obtenerElementos()) {
+            for (V vecino : grafo.obtenerElementos()) { // Asegúrate de que obtenerVecinos use el tipo correcto
                 double x1 = vertice.getCoordX();
                 double y1 = vertice.getCoordY();
                 double x2 = vecino.getCoordX();
                 double y2 = vecino.getCoordY();
 
-                sb.append(traductor.dibujaLinea(x1, y1, x2, y2, colorLinea, anchoLinea));
+                sb.append(traductor.dibujaLinea(x1, y1, x2, y2, vertice.getColorVertice(), ANCHO_LINEA));
+
             }
         }
     }
@@ -101,8 +106,12 @@ public class GraficadorGrafo<V extends VerticeCoordenado> {
      * @param camino una lista de vertices.
      */
     public void graficaCamino(List<V> camino){
-        ColorSVG colorCamino = ColorSVG.ROJO; // Puedes cambiar el color del camino
-        int anchoCamino = 3; // Grosor de la línea del camino
+
+        if(camino.isEmpty()){
+            System.err.println("NOMAMES");
+        }
+
+        ColorHex colorCamino = ColorHex.ROJO; // Puedes cambiar el color del camino
 
         for (int i = 0; i < camino.size() - 1; i++) {
             V verticeActual = camino.get(i);
@@ -112,7 +121,23 @@ public class GraficadorGrafo<V extends VerticeCoordenado> {
             double x2 = siguienteVertice.getCoordX();
             double y2 = siguienteVertice.getCoordY();
 
-            sb.append(traductor.dibujaLinea(x1, y1, x2, y2, colorCamino, anchoCamino));
+            sb.append(traductor.dibujaLinea(x1, y1, x2, y2, colorCamino, ANCHO_LINEA*2));
+        }
+
+        graficaDescripciones(camino);
+    }
+
+    /**
+     * Método para graficar una lista con información de los vértices de un camin
+     * a la derecha del lienzo
+     */
+    private void graficaDescripciones(List<V> camino) {
+        double posicionX = maxCoordX + 30; // Margen a la derecha del lienzo
+        double posicionY = 10; // Inicia en la parte superior
+
+        for (V vertice : camino) {
+            posicionY += TAM_FUENTE + 5; // Espaciado vertical entre descripciones
+            sb.append(traductor.dibujaTexto(posicionX, posicionY, vertice.descripcion(), TAM_FUENTE, vertice.getColorVertice()));
         }
     }
 
