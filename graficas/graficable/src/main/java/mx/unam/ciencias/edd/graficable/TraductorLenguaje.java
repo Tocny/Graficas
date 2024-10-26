@@ -47,22 +47,6 @@ public interface TraductorLenguaje {
     public String dibujaCirculo(double cx, double cy, int radio, ColorHex colorBorde, int gruesoBorde, ColorHex colorFigura);
 
     /**
-     * Método que dibuja un triángulo en el lienzo.
-     * @param x1 la coordenada x del primer vértice.
-     * @param y1 la coordenada y del primer vértice.
-     * @param x2 la coordenada x del segundo vértice.
-     * @param y2 la coordenada y del segundo vértice.
-     * @param x3 la coordenada x del tercer vértice.
-     * @param y3 la coordenada y del tercer vértice.
-     * @param colorBorde el color del borde del triángulo.
-     * @param gruesoBorde el grosor del borde del triángulo.
-     * @param colorFigura el color de relleno del triángulo.
-     * @return una cadena que representa el triángulo.
-     */
-    public String dibujaTriangulo(double x1, double y1, double x2, double y2, double x3, double y3, ColorHex colorBorde, int gruesoBorde, ColorHex colorFigura);
-
-
-    /**
      * Dibuja una línea en el lienzo entre dos puntos especificados.
      *
      * @param x1 la coordenada x del primer extremo de la línea.

@@ -4,10 +4,10 @@ import mx.unam.ciencias.edd.GraficaDirigida;
 import mx.unam.ciencias.edd.graficable.svg.ColorHex;
 import java.util.*;
 
-public class GraficadorGrafo<V extends VerticeCoordenado> {
+public class GraficadorGrafo<T extends VerticeCoordenado> {
 
     /** La grafica dirigida que vamos a graficar. */
-    private GraficaDirigida<V> grafo; 
+    private GraficaDirigida<T> grafo; 
     /** Ancho del lienzo. */
     private double anchoLienzo = 200;
     /** Alto del lienzo. */
@@ -21,22 +21,27 @@ public class GraficadorGrafo<V extends VerticeCoordenado> {
     /** StringBuilder que almacena los datos. */
     private StringBuilder sb;
 
-    /** Constantes privadas para dimensiones y estilos */
+    /**Radio de los vértices */
     private static final int RADIO_VERTICE = 10; 
-    private static final ColorHex COLOR_BORDE = ColorHex.NEGRO; 
+    /**Color de los bordes de las figuras. */
+    private static final ColorHex COLOR_BORDE = ColorHex.NEGRO;
+    /**Grueso de los vordes de las figuras. */ 
     private static final int GRUESO_BORDE = 2; 
+    /**Color de las figuras. */
     private static final ColorHex COLOR_FIGURA = ColorHex.BLANCO; 
-    private static final int TAM_FUENTE = 12; // Tamaño de la fuente para el texto
-    private static final ColorHex COLOR_TEXTO = ColorHex.NEGRO; // Color del texto
+    /**Tamaño de la fuente para el texto */
+    private static final int TAM_FUENTE = 12;
+    /**Color de los textos. */
+    private static final ColorHex COLOR_TEXTO = ColorHex.NEGRO;
+    /**Ancho de las lineas a dibujar. */
     private static final int ANCHO_LINEA = 2; 
-    private static final int TAMANIO_APUNTADOR = 5;
 
     /**
      * Constructor de la clase, asigna atributos.
      * 
      * @param grafo un grafo dirigido.
      */
-    public GraficadorGrafo(GraficaDirigida<V> grafo, TraductorLenguaje traductor){
+    public GraficadorGrafo(GraficaDirigida<T> grafo, TraductorLenguaje traductor){
         this.grafo = grafo;
         this.traductor = traductor;
         this.sb = new StringBuilder(); // Inicializa StringBuilder
@@ -52,7 +57,7 @@ public class GraficadorGrafo<V extends VerticeCoordenado> {
             throw new IllegalArgumentException("El grafo está vacío o no inicializado.");
         }
         
-        for (V vertice : grafo.obtenerElementos()) {
+        for (T vertice : grafo.obtenerElementos()) {
             double coordX = vertice.getCoordX();
             double coordY = vertice.getCoordY();
 
@@ -72,13 +77,13 @@ public class GraficadorGrafo<V extends VerticeCoordenado> {
      * Método que agrega los vértices al sb.
      */
     public void graficaVertices(){
-        for (V vertice : grafo.obtenerElementos()) {
+        for (T vertice : grafo.obtenerElementos()) {
             double cx = vertice.getCoordX();
             double cy = vertice.getCoordY();
             
             // Dibuja el círculo
             sb.append(traductor.dibujaCirculo(cx, cy, RADIO_VERTICE, COLOR_BORDE, GRUESO_BORDE, COLOR_FIGURA));
-            sb.append(traductor.dibujaTexto(cx, cy - 15, vertice.descripcion(), TAM_FUENTE, COLOR_TEXTO)); // Ajustar 'cy' para que el texto esté arriba
+            sb.append(traductor.dibujaTexto(cx, cy - 15, vertice.getDescripcion(), TAM_FUENTE, COLOR_TEXTO)); // Ajustar 'cy' para que el texto esté arriba
         }
     }
 
@@ -87,8 +92,8 @@ public class GraficadorGrafo<V extends VerticeCoordenado> {
      */
     public void graficaAristas() {
 
-        for (V vertice : grafo.obtenerElementos()) {
-            for (V vecino : grafo.obtenerVecinos(vertice)) {
+        for (T vertice : grafo.obtenerElementos()) {
+            for (T vecino : grafo.obtenerVecinos(vertice)) {
                 double x1 = vertice.getCoordX();
                 double y1 = vertice.getCoordY();
                 double x2 = vecino.getCoordX();
@@ -105,17 +110,13 @@ public class GraficadorGrafo<V extends VerticeCoordenado> {
      * 
      * @param camino una lista de vertices.
      */
-    public void graficaCamino(List<V> camino){
-
-        if(camino.isEmpty()){
-            System.err.println("NOMAMES");
-        }
+    public void graficaCamino(List<T> camino){
 
         ColorHex colorCamino = ColorHex.ROJO; // Puedes cambiar el color del camino
 
         for (int i = 0; i < camino.size() - 1; i++) {
-            V verticeActual = camino.get(i);
-            V siguienteVertice = camino.get(i + 1);
+            T verticeActual = camino.get(i);
+            T siguienteVertice = camino.get(i + 1);
             double x1 = verticeActual.getCoordX();
             double y1 = verticeActual.getCoordY();
             double x2 = siguienteVertice.getCoordX();
@@ -131,13 +132,13 @@ public class GraficadorGrafo<V extends VerticeCoordenado> {
      * Método para graficar una lista con información de los vértices de un camin
      * a la derecha del lienzo
      */
-    private void graficaDescripciones(List<V> camino) {
+    private void graficaDescripciones(List<T> camino) {
         double posicionX = maxCoordX + 30; // Margen a la derecha del lienzo
         double posicionY = 10; // Inicia en la parte superior
 
-        for (V vertice : camino) {
+        for (T vertice : camino) {
             posicionY += TAM_FUENTE + 5; // Espaciado vertical entre descripciones
-            sb.append(traductor.dibujaTexto(posicionX, posicionY, vertice.descripcion(), TAM_FUENTE, vertice.getColorVertice()));
+            sb.append(traductor.dibujaTexto(posicionX, posicionY, vertice.getDescripcion(), TAM_FUENTE, vertice.getColorVertice()));
         }
     }
 
