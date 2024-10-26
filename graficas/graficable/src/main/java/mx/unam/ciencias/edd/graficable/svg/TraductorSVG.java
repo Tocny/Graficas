@@ -49,24 +49,6 @@ public class TraductorSVG implements TraductorLenguaje {
     }
 
     /**
-     * Método que dibuja un triángulo en el lienzo SVG.
-     * @param x1 la coordenada x del primer vértice.
-     * @param y1 la coordenada y del primer vértice.
-     * @param x2 la coordenada x del segundo vértice.
-     * @param y2 la coordenada y del segundo vértice.
-     * @param x3 la coordenada x del tercer vértice.
-     * @param y3 la coordenada y del tercer vértice.
-     * @param colorBorde el color del borde del triángulo.
-     * @param gruesoBorde el grosor del borde del triángulo.
-     * @param colorFigura el color de relleno del triángulo.
-     * @return una cadena SVG que representa el triángulo.
-     */
-    @Override public String dibujaTriangulo(double x1, double y1, double x2, double y2, double x3, double y3, ColorHex colorBorde, int gruesoBorde, ColorHex colorFigura) {
-        return String.format("    <polygon points='%f,%f %f,%f %f,%f' stroke='%s' stroke-width='%d' fill='%s' />\n",
-                             x1, y1, x2, y2, x3, y3, colorBorde.getCodigoColor(), gruesoBorde, colorFigura.getCodigoColor());
-    }
-
-    /**
      * Método que dibuja una línea en el lienzo.
      * @param x1 coordenada horizontal del primer extremo.
      * @param y1 coordenada vertical del primer extremo.

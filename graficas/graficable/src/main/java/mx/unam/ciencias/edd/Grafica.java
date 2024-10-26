@@ -417,6 +417,29 @@ public class Grafica<T> implements Coleccion<T> {
     }
 
     /**
+     * Método que regresa una lista de los elementos (llaves del map).
+     * 
+     * @return una lista de los elementos (llaves).
+     */
+    public List<T> obtenerElementos() {
+        return new ArrayList<>(vertices.keySet());
+    }
+
+    /**
+     * Método que regresa todos los elementos de los vecinos de un vértice.
+     * 
+     * @param elemento el elemento que se va a buscar en los vértices.
+     * @return una lista de vecinos del elemento.
+     */
+    public List<T> obtenerVecinos(T elemento){
+
+        Vertice vertice = (Vertice) vertice(elemento);
+
+        return new ArrayList<>(vertice.vecinos.keySet());
+
+    }
+
+    /**
      * Nos dice si la gráfica es conexa.
      * @return <code>true</code> si la gráfica es conexa, <code>false</code> en
      *         otro caso.
@@ -852,14 +875,5 @@ public class Grafica<T> implements Coleccion<T> {
             //En otro caso, se hace infinita.
             v.distancia = INFINITO;
         }
-    }
-
-    /**
-     * Método que regresa una lista de los elementos (llaves del map).
-     * 
-     * @return una lista de los elementos (llaves).
-     */
-    public List<T> obtenerElementos() {
-        return new ArrayList<>(vertices.keySet());
     }
 }

@@ -36,5 +36,5 @@ public interface VerticeCoordenado {
      * 
      * @return una cadena con la descripción del vértice.
      */
-    public String descripcion();
+    public String getDescripcion();
 }

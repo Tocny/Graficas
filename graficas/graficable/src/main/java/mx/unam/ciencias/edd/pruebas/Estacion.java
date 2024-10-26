@@ -53,7 +53,7 @@ public class Estacion implements VerticeCoordenado {
     }
 
     @Override
-    public String descripcion() {
+    public String getDescripcion() {
         return descripcion; // Retorna la descripción pasada por el constructor
     }
 
@@ -66,7 +66,7 @@ public class Estacion implements VerticeCoordenado {
         // Comparar todos los atributos relevantes
         return Double.compare(coordX, other.getCoordX()) == 0 &&
                Double.compare(coordY, other.getCoordY()) == 0 &&
-               descripcion.equals(other.descripcion());
+               descripcion.equals(other.getDescripcion());
     }
 
     @Override
