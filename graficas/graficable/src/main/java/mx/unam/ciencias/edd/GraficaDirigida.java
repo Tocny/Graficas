@@ -1013,4 +1013,12 @@ public class GraficaDirigida<T> implements Coleccion<T> {
     public List<T> obtenerElementos() {
         return new ArrayList<>(vertices.keySet());
     }
+
+    public List<T> obtenerVecinos(T elemento){
+
+        Vertice vertice = (Vertice) vertice(elemento);
+
+        return new ArrayList<>(vertice.vecinos.keySet());
+
+    }
 }

@@ -88,7 +88,7 @@ public class GraficadorGrafo<V extends VerticeCoordenado> {
     public void graficaAristas() {
 
         for (V vertice : grafo.obtenerElementos()) {
-            for (V vecino : grafo.obtenerElementos()) { // Asegúrate de que obtenerVecinos use el tipo correcto
+            for (V vecino : grafo.obtenerVecinos(vertice)) {
                 double x1 = vertice.getCoordX();
                 double y1 = vertice.getCoordY();
                 double x2 = vecino.getCoordX();
