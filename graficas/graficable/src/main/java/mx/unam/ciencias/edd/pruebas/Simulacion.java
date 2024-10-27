@@ -64,12 +64,15 @@ public class Simulacion {
         // Graficar en SVG
         Estacion estacion5 = new Estacion(250, 150, ColorHex.NEGRO, "Estación 5");
         Estacion estacion4 = new Estacion(300, 50, ColorHex.NEGRO, "Estación 4");
-        GraficadorGrafo<Estacion> graficador = new GraficadorGrafo<>(graficaCombinada, new TraductorSVG());
-        graficador.graficaAristas();
-        graficador.graficaCamino(graficaCombinada.dijkstraElementos(estacion5, estacion4));
-        graficador.graficaVertices();
+        //GraficadorGrafo<Estacion> graficador = new GraficadorGrafo<>(graficaCombinada, new TraductorSVG());
 
-        // Mostrar el resultado en SVG
-        System.out.println(graficador.toString());
+        GraficadorBuilderSVG<Estacion> graficador = new GraficadorBuilderSVG<>(graficaCombinada)
+                                                    .setTrayectoria(graficaCombinada.dijkstraElementos(estacion5, estacion4));
+
+        // Obtener la salida en SVG
+        String resultadoSVG = graficador.graficar();
+        
+        // Imprimir o guardar el resultado en SVG
+        System.out.println(resultadoSVG);
     }
 }
