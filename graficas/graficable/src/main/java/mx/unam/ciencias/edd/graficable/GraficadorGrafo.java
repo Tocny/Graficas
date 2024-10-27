@@ -125,14 +125,13 @@ public class GraficadorGrafo<T extends VerticeCoordenado> {
             sb.append(traductor.dibujaLinea(x1, y1, x2, y2, colorCamino, ANCHO_LINEA*2));
         }
 
-        graficaDescripciones(camino);
     }
 
     /**
      * Método para graficar una lista con información de los vértices de un camin
      * a la derecha del lienzo
      */
-    private void graficaDescripciones(List<T> camino) {
+    public void graficaDescripciones(List<T> camino) {
         double posicionX = maxCoordX + 30; // Margen a la derecha del lienzo
         double posicionY = 10; // Inicia en la parte superior
 
